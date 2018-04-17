@@ -27,7 +27,6 @@ public class MainActivity extends BaseActivity {
   private EditText edtEventDescription;
   private EditText edtStartDate;
   private ListView lstViewEvents;
-  List<String> tempItems = new ArrayList<String>();
   ArrayAdapter adapter;
   Date startDate;
 
@@ -43,19 +42,15 @@ public class MainActivity extends BaseActivity {
     edtStartDate = findViewById( R.id.edtStartDate );
     lstViewEvents = findViewById( R.id.lstViewEvents );
 
-    tempItems.add( "Computer" );
-    tempItems.add( "Keyboard" );
-    tempItems.add( "Mouse" );
-
-    // Create array adapter for the list view to use
-    adapter = new ArrayAdapter<String>( this, R.layout.activity_listview, tempItems );
-    lstViewEvents.setAdapter( adapter );
+    // Create array adapter for the list view to use   TODO: don't need this anymore
+//    adapter = new ArrayAdapter<String>( this, R.layout.activity_listview, tempItems );
+//    lstViewEvents.setAdapter( adapter );
 
     // Create listener for the scrolling list
     lstViewEvents.setOnItemClickListener( new AdapterView.OnItemClickListener() {
       @Override
       public void onItemClick( AdapterView<?> parent, View view, int position, long id ) {
-        toastIt( "You clicked on " + position );
+        toastIt( "You clicked on " + position + " Name: " + items.getValue().get( position ) );
       }
     } );
 
