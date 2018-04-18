@@ -50,6 +50,7 @@
         android:layout_marginEnd="16dp"
         android:ems="10"
         android:inputType="text"
+        android:nextFocusDown="@id/btnSaveEvent"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView5"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -58,10 +59,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="text"
+        android:nextFocusDown="@id/edtAttendees"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:layout_editor_absoluteY="127dp" />
+        app:layout_constraintTop_toBottomOf="@+id/edtEditName" />
 
     <EditText
         android:id="@+id/edtEditName"
@@ -71,6 +74,7 @@
         android:ems="10"
         android:hint="Enter Name Of Event"
         android:inputType="text"
+        android:nextFocusDown="@id/edtEditDescription"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView4"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -93,8 +97,36 @@
         android:id="@+id/button"
         android:layout_width="127dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:text="Save Changes"
-        app:layout_constraintEnd_toEndOf="@+id/edtAttendees"
-        app:layout_constraintTop_toBottomOf="@+id/edtAttendees" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/btnDelete"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/btnDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:onClick="deleteOnClick"
+        android:text="Delete Event"
+        app:layout_constraintEnd_toStartOf="@+id/button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnDelete"
+        app:srcCompat="@mipmap/ic_launcher_round" />
 </android.support.constraint.ConstraintLayout>
