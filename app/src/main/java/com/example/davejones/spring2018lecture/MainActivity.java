@@ -42,15 +42,12 @@ public class MainActivity extends BaseActivity {
     edtStartDate = findViewById( R.id.edtStartDate );
     lstViewEvents = findViewById( R.id.lstViewEvents );
 
-    // Create array adapter for the list view to use   TODO: don't need this anymore
-//    adapter = new ArrayAdapter<String>( this, R.layout.activity_listview, tempItems );
-//    lstViewEvents.setAdapter( adapter );
-
     // Create listener for the scrolling list
     lstViewEvents.setOnItemClickListener( new AdapterView.OnItemClickListener() {
       @Override
       public void onItemClick( AdapterView<?> parent, View view, int position, long id ) {
         toastIt( "You clicked on " + position + " Name: " + items.getValue().get( position ) );
+        // Switch to the Show page of the record.
       }
     } );
 
@@ -65,7 +62,6 @@ public class MainActivity extends BaseActivity {
         lstViewEvents.invalidateViews();
         lstViewEvents.refreshDrawableState();
       }
-
     } );
 
   }
