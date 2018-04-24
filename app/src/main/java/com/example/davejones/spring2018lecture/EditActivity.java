@@ -30,9 +30,11 @@ public class EditActivity extends BaseActivity {
   ImageView imageView;
   private static final int REQUEST_CAPTURE_IMAGE = 42;
   String imageFilePath;
+  Observer<Event> eventObserver;
+  int recordID;
 
   @Override
-  public void onCreate( Bundle savedInstanceState ) {
+  public void onCreate( @Nullable Bundle savedInstanceState ) {
     super.onCreate( savedInstanceState );
     setContentView( R.layout.activity_edit );
 
@@ -51,17 +53,22 @@ public class EditActivity extends BaseActivity {
       }
     } );
 
+    // Look at the bundle - and getExtra(
+    if( savedInstanceState != null ) {
+      recordID = savedInstanceState.getInt( "recordid" );
+    }
     // LiveData
-    event = eventDatabase.eventDao().findByRecordNum( 2 );  // TODO:  Fix this to not be hard coded.
-    event.observe( this, new Observer<Event>() {
-
+    eventObserver = new Observer<Event>() {
       @Override
       public void onChanged( @Nullable Event event ) {
         edtEditName.setText( event.getName() );
         edtEditDescription.setText( event.getDescription() );
         edtAttendees.setText( event.getAttendees() );
       }
-    } );
+    };
+
+    event = eventDatabase.eventDao().findByRecordNum( 3 );  // TODO:  Fix this to not be hard coded.
+    event.observe( this, eventObserver );
   }
   //  https://developer.android.com/training/camera/photobasics.html#TaskPath
 
@@ -157,7 +164,19 @@ public class EditActivity extends BaseActivity {
           public void onClick( DialogInterface dialog, int which ) {
             // Perform something when they click YES
             // Delete record
+            event.removeObserver( eventObserver );
+            new Thread( new Runnable() {
+              @Override
+              public void run() {
+                eventDatabase.eventDao().deleteEvent( event.getValue() );
+              }
+            } ).start();
+
             toastIt( "Record Deleted" );
+            // Switch to main activity
+            Intent intent = new Intent( getApplicationContext(), MainActivity.class );
+            startActivity( intent );
+
           }
         } )
         .setNegativeButton( "NO", new DialogInterface.OnClickListener() {

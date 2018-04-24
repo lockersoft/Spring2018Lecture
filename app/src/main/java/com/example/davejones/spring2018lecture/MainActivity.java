@@ -4,6 +4,7 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 
 import android.arch.persistence.room.Room;
+import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -33,7 +34,7 @@ public class MainActivity extends BaseActivity {
   LiveData<List<String>> items;
 
   @Override
-  public void onCreate( Bundle savedInstanceState ) {
+  public void onCreate( @Nullable Bundle savedInstanceState ) {
     super.onCreate( savedInstanceState );
     setContentView( R.layout.activity_main );
 
@@ -48,9 +49,13 @@ public class MainActivity extends BaseActivity {
       public void onItemClick( AdapterView<?> parent, View view, int position, long id ) {
         toastIt( "You clicked on " + position + " Name: " + items.getValue().get( position ) );
         // Switch to the Show page of the record.
+        // Pass the record ID of the one that you clicked.
+        // putExtra( "recordID", event.id )
+        Intent intent = new Intent( getApplicationContext(), EditActivity.class );
+        intent.putExtra( "recordid", 2 );  //
+        startActivity( intent );
       }
     } );
-
 
     items = eventDatabase.eventDao().getAllNames();
     items.observe( this, new Observer<List<String>>() {
