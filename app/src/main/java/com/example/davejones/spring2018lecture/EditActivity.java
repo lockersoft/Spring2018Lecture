@@ -67,10 +67,28 @@ public class EditActivity extends BaseActivity {
       }
     };
 
-    event = eventDatabase.eventDao().findByRecordNum( 3 );  // TODO:  Fix this to not be hard coded.
+    event = eventDatabase.eventDao().findByRecordNum( 4 );  // TODO:  Fix this to not be hard coded.
     event.observe( this, eventObserver );
   }
   //  https://developer.android.com/training/camera/photobasics.html#TaskPath
+
+  public void onSaveChangesClick( View v ) {
+    // Get all of the data from the fields
+    // Store it into the event object
+    // call update
+    event.getValue().setName( edtEditName.getText().toString() );
+    // ....
+    // Change the modified date
+//    event.getValue().setEndDate( new Date() );
+
+    new Thread( new Runnable() {
+      @Override
+      public void run() {
+        eventDatabase.eventDao().updateEvent( event.getValue() );
+      }
+    } ).start();
+  }
+
 
   private File createImageFile() throws IOException {
     // Create an image file name
