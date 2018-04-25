@@ -41,6 +41,11 @@ public class Event {
 //  private Time endTime;
 
 
+  @Override
+  public String toString() {
+    return name + '(' + eventID + ')';
+  }
+
   public String getAttendees() {
     return attendees;
   }

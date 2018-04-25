@@ -15,7 +15,7 @@ import java.util.List;
 public interface EventDao {
 
   @Query("SELECT * FROM events")
-  List<Event> getAll();
+  LiveData<List<Event>> getAll();
 
   @Query("SELECT name FROM events")
   LiveData<List<String>> getAllNames();
@@ -24,7 +24,7 @@ public interface EventDao {
   Event findByName( String event_name );
 
   @Query("SELECT * FROM events WHERE eventID = :eventID")
-  LiveData<Event> findByRecordNum( int eventID );
+  LiveData<Event> findByRecordNum( long eventID );
 
   @Insert
   void addEvent( Event event );

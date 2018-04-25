@@ -31,7 +31,7 @@ public class EditActivity extends BaseActivity {
   private static final int REQUEST_CAPTURE_IMAGE = 42;
   String imageFilePath;
   Observer<Event> eventObserver;
-  int recordID;
+  long recordID;
 
   @Override
   public void onCreate( @Nullable Bundle savedInstanceState ) {
@@ -54,8 +54,8 @@ public class EditActivity extends BaseActivity {
     } );
 
     // Look at the bundle - and getExtra(
-    if( savedInstanceState != null ) {
-      recordID = savedInstanceState.getInt( "recordid" );
+    if( getIntent().getExtras() != null ) {
+      recordID = getIntent().getExtras().getLong( "recordid" );
     }
     // LiveData
     eventObserver = new Observer<Event>() {
@@ -67,7 +67,7 @@ public class EditActivity extends BaseActivity {
       }
     };
 
-    event = eventDatabase.eventDao().findByRecordNum( 4 );  // TODO:  Fix this to not be hard coded.
+    event = eventDatabase.eventDao().findByRecordNum( recordID );  // TODO:  Fix this to not be hard coded.
     event.observe( this, eventObserver );
   }
   //  https://developer.android.com/training/camera/photobasics.html#TaskPath

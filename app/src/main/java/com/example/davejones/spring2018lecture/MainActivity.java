@@ -31,7 +31,7 @@ public class MainActivity extends BaseActivity {
   ArrayAdapter adapter;
   Date startDate;
 
-  LiveData<List<String>> items;
+  LiveData<List<Event>> items;
 
   @Override
   public void onCreate( @Nullable Bundle savedInstanceState ) {
@@ -52,16 +52,16 @@ public class MainActivity extends BaseActivity {
         // Pass the record ID of the one that you clicked.
         // putExtra( "recordID", event.id )
         Intent intent = new Intent( getApplicationContext(), EditActivity.class );
-        intent.putExtra( "recordid", 2 );  //
+        intent.putExtra( "recordid", items.getValue().get( position ).getEventID() );  //
         startActivity( intent );
       }
     } );
 
-    items = eventDatabase.eventDao().getAllNames();
-    items.observe( this, new Observer<List<String>>() {
+    items = eventDatabase.eventDao().getAll();
+    items.observe( this, new Observer<List<Event>>() {
       @Override
-      public void onChanged( @Nullable List<String> eventNames ) {
-        adapter = new ArrayAdapter<String>( getApplicationContext(), R.layout.activity_listview, eventNames );
+      public void onChanged( @Nullable List<Event> eventNames ) {
+        adapter = new ArrayAdapter<Event>( getApplicationContext(), R.layout.activity_listview, eventNames );
         lstViewEvents.setAdapter( adapter );
         adapter.notifyDataSetChanged();
         lstViewEvents.invalidateViews();
