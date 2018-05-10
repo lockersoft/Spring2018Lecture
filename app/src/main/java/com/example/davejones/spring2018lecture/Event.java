@@ -1,65 +1,80 @@
 package com.example.davejones.spring2018lecture;
 
-import android.arch.persistence.room.ColumnInfo;
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.PrimaryKey;
-import android.arch.persistence.room.TypeConverter;
-import android.arch.persistence.room.TypeConverters;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
-import java.sql.Time;
 import java.util.Date;
 
-/**
- * Created by dave.jones on 4/3/18.
- */
-
-@Entity(tableName = "events")
 public class Event {
 
-  @PrimaryKey(autoGenerate = true)
-  @ColumnInfo(name = "eventID")
-  private long eventID;
-
-  @ColumnInfo(name = "name")
+  @SerializedName("id")
+  @Expose
+  private Integer id;
+  @SerializedName("name")
+  @Expose
   private String name;
 
-  @ColumnInfo(name = "description")
+  @SerializedName("description")
+  @Expose
   private String description;
 
-  @ColumnInfo(name = "attendees")
-  private String attendees;
+  @SerializedName("attendees")
+  @Expose
+  private Object attendees;
 
-  @TypeConverters(Converters.class)
-  @ColumnInfo(name = "startDate")
+  @SerializedName("startDate")
+  @Expose
   private Date startDate;
 
-  @TypeConverters(Converters.class)
-  @ColumnInfo(name = "endDate")
+  @SerializedName("endDate")
+  @Expose
   private Date endDate;
+  @SerializedName("created_at")
+  @Expose
+  private Date createdAt;
+  @SerializedName("updated_at")
+  @Expose
+  private Date updatedAt;
 
-//  private Time startTime;
-//  private Time endTime;
-
-
-  @Override
-  public String toString() {
-    return name + '(' + eventID + ')';
+  /**
+   * No args constructor for use in serialization
+   */
+  public Event() {
   }
 
-  public String getAttendees() {
-    return attendees;
-  }
-
-  public void setAttendees( String attendees ) {
+  /**
+   *
+   * @param updatedAt
+   * @param id
+   * @param startDate
+   * @param attendees
+   * @param createdAt
+   * @param description
+   * @param name
+   * @param endDate
+   */
+  public Event( Integer id, String name, String description, Object attendees, Date startDate, Date endDate, Date createdAt, Date updatedAt ) {
+    super();
+    this.id = id;
+    this.name = name;
+    this.description = description;
     this.attendees = attendees;
+    this.startDate = startDate;
+    this.endDate = endDate;
+    this.createdAt = createdAt;
+    this.updatedAt = updatedAt;
   }
 
-  public long getEventID() {
-    return eventID;
+  public String toString() {
+    return name + "(" + id + ") : " + description;
   }
 
-  public void setEventID( long eventID ) {
-    this.eventID = eventID;
+  public Integer getId() {
+    return id;
+  }
+
+  public void setId( Integer id ) {
+    this.id = id;
   }
 
   public String getName() {
@@ -78,6 +93,14 @@ public class Event {
     this.description = description;
   }
 
+  public Object getAttendees() {
+    return attendees;
+  }
+
+  public void setAttendees( Object attendees ) {
+    this.attendees = attendees;
+  }
+
   public Date getStartDate() {
     return startDate;
   }
@@ -94,19 +117,20 @@ public class Event {
     this.endDate = endDate;
   }
 
-//  public Time getStartTime() {
-//    return startTime;
-//  }
-//
-//  public void setStartTime( Time startTime ) {
-//    this.startTime = startTime;
-//  }
-//
-//  public Time getEndTime() {
-//    return endTime;
-//  }
-//
-//  public void setEndTime( Time endTime ) {
-//    this.endTime = endTime;
-//  }
+  public Date getCreatedAt() {
+    return createdAt;
+  }
+
+  public void setCreatedAt( Date createdAt ) {
+    this.createdAt = createdAt;
+  }
+
+  public Date getUpdatedAt() {
+    return updatedAt;
+  }
+
+  public void setUpdatedAt( Date updatedAt ) {
+    this.updatedAt = updatedAt;
+  }
+
 }

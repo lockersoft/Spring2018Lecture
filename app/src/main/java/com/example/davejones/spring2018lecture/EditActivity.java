@@ -57,18 +57,18 @@ public class EditActivity extends BaseActivity {
     if( getIntent().getExtras() != null ) {
       recordID = getIntent().getExtras().getLong( "recordid" );
     }
-    // LiveData
-    eventObserver = new Observer<Event>() {
-      @Override
-      public void onChanged( @Nullable Event event ) {
-        edtEditName.setText( event.getName() );
-        edtEditDescription.setText( event.getDescription() );
-        edtAttendees.setText( event.getAttendees() );
-      }
-    };
-
-    event = eventDatabase.eventDao().findByRecordNum( recordID );  // TODO:  Fix this to not be hard coded.
-    event.observe( this, eventObserver );
+//    // LiveData
+//    eventObserver = new Observer<Event>() {
+//      @Override
+//      public void onChanged( @Nullable Event event ) {
+//        edtEditName.setText( event.getName() );
+//        edtEditDescription.setText( event.getDescription() );
+//        edtAttendees.setText( event.getAttendees() );
+//      }
+//    };
+//
+//    event = eventDatabase.eventDao().findByRecordNum( recordID );  // TODO:  Fix this to not be hard coded.
+//    event.observe( this, eventObserver );
   }
   //  https://developer.android.com/training/camera/photobasics.html#TaskPath
 
@@ -80,13 +80,13 @@ public class EditActivity extends BaseActivity {
     // ....
     // Change the modified date
 //    event.getValue().setEndDate( new Date() );
-
-    new Thread( new Runnable() {
-      @Override
-      public void run() {
-        eventDatabase.eventDao().updateEvent( event.getValue() );
-      }
-    } ).start();
+//
+//    new Thread( new Runnable() {
+//      @Override
+//      public void run() {
+//        eventDatabase.eventDao().updateEvent( event.getValue() );
+//      }
+//    } ).start();
   }
 
 
@@ -181,14 +181,14 @@ public class EditActivity extends BaseActivity {
           @Override
           public void onClick( DialogInterface dialog, int which ) {
             // Perform something when they click YES
-            // Delete record
-            event.removeObserver( eventObserver );
-            new Thread( new Runnable() {
-              @Override
-              public void run() {
-                eventDatabase.eventDao().deleteEvent( event.getValue() );
-              }
-            } ).start();
+//            // Delete record
+//            event.removeObserver( eventObserver );
+//            new Thread( new Runnable() {
+//              @Override
+//              public void run() {
+//                eventDatabase.eventDao().deleteEvent( event.getValue() );
+//              }
+//            } ).start();
 
             toastIt( "Record Deleted" );
             // Switch to main activity

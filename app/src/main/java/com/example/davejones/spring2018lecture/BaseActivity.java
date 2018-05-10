@@ -10,21 +10,36 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.android.volley.Cache;
+import com.android.volley.Network;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.BasicNetwork;
+import com.android.volley.toolbox.DiskBasedCache;
+import com.android.volley.toolbox.HurlStack;
+
 public class BaseActivity extends AppCompatActivity {
 
-  public AppDatabase eventDatabase;
+  //  public AppDatabase eventDatabase;
+  RequestQueue requestQueue;
 
   @Override
   public void onCreate( @Nullable Bundle savedInstanceState ) {//@Nullable PersistableBundle persistentState) {
     super.onCreate( savedInstanceState );
     setContentView( R.layout.activity_base );
 
-    if( eventDatabase == null ) {
-      eventDatabase = Room.databaseBuilder( getApplicationContext(),
-          AppDatabase.class, "events.db" )
-          .fallbackToDestructiveMigration()
-          .build();
-    }
+//    if( eventDatabase == null ) {
+//      eventDatabase = Room.databaseBuilder( getApplicationContext(),
+//          AppDatabase.class, "events.db" )
+//          .fallbackToDestructiveMigration()
+//          .build();
+//    }
+
+    // Volley Library
+    Cache cache = new DiskBasedCache( getCacheDir(), 1024 * 1024 );
+    Network network = new BasicNetwork( new HurlStack() );
+
+    requestQueue = new RequestQueue( cache, network );
+    requestQueue.start();
   }
 
   @Override
