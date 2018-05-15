@@ -35,6 +35,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -48,7 +49,8 @@ public class MainActivity extends BaseActivity {
   Date startDate;
   Gson gson;
 
-  LiveData<List<Event>> items;
+//  LiveData<List<Event>> items;
+
 
   @Override
   public void onCreate( @Nullable Bundle savedInstanceState ) {
@@ -64,16 +66,17 @@ public class MainActivity extends BaseActivity {
     gsonBuilder.setDateFormat( "yyyy-MM-dd'T'HH:mm:ssX" );    //"2018-05-07T16:13:40.000Z"
     gson = gsonBuilder.create();
 
+    internetOnClick( null );
+
     // Create listener for the scrolling list
     lstViewEvents.setOnItemClickListener( new AdapterView.OnItemClickListener() {
       @Override
       public void onItemClick( AdapterView<?> parent, View view, int position, long id ) {
-        toastIt( "You clicked on " + position + " Name: " + items.getValue().get( position ) );
+        toastIt( "You clicked on " + position + " Name: " + events[position] );
         // Switch to the Show page of the record.
         // Pass the record ID of the one that you clicked.
-        // putExtra( "recordID", event.id )
         Intent intent = new Intent( getApplicationContext(), EditActivity.class );
-//        intent.putExtra( "recordid", items.getValue().get( position ).getEventID() );  //
+        intent.putExtra( "recordID", events[position].getId() );
         startActivity( intent );
       }
     } );
@@ -103,7 +106,7 @@ public class MainActivity extends BaseActivity {
           public void onResponse( String response ) {
             // Do something with the returned data
             Log.d( "INTERNET", response );
-            Event[] events = gson.fromJson( response, Event[].class );
+            events = gson.fromJson( response, Event[].class );
             // Take data to display on the view
             adapter = new ArrayAdapter<Event>( getApplicationContext(), R.layout.activity_listview, events );
             lstViewEvents.setAdapter( adapter );
@@ -176,6 +179,7 @@ public class MainActivity extends BaseActivity {
 
   public void saveEventOnClick( View v ) {
 
+    String url = "https://api2018.azurewebsites.net/events";
     final String eventDescription = edtEventDescription.getText().toString();
     final String eventName = edtEventName.getText().toString();
     String startDateStr = edtStartDate.getText().toString();
@@ -190,6 +194,35 @@ public class MainActivity extends BaseActivity {
       startDate = new Date();
     }
 
+    // Create a JSON object first
+// "name": "Daves Birthday1",
+//	"description": "Cool day",
+//	"attendees": "Dave, Karin",
+//	"start_date": "2018-04-24T15:51:34.945Z",
+//	"end_date": "2018-04-24T15:51:34.945Z"
+
+    // HASHMAP  = HASH  Key=>Value
+    HashMap<String, String> params = new HashMap<String, String>();
+    params.put( "name", eventName );
+    params.put( "description", eventDescription );
+
+    // POST that JSON object to the server using VOLLEY
+    JsonObjectRequest request = new JsonObjectRequest( url, new JSONObject( params ),
+        new Response.Listener<JSONObject>() {
+          @Override
+          public void onResponse( JSONObject response ) {
+            Log.d( "EVENT", response.toString() );
+          }
+        },
+        new Response.ErrorListener() {
+          @Override
+          public void onErrorResponse( VolleyError error ) {
+            Log.d( "EVENT", error.toString() );
+          }
+        }
+    );
+
+    requestQueue.add( request );
 //    new Thread( new Runnable() {
 //
 //      @Override

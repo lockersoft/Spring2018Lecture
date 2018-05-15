@@ -31,7 +31,7 @@ public class EditActivity extends BaseActivity {
   private static final int REQUEST_CAPTURE_IMAGE = 42;
   String imageFilePath;
   Observer<Event> eventObserver;
-  long recordID;
+  int recordID;
 
   @Override
   public void onCreate( @Nullable Bundle savedInstanceState ) {
@@ -55,8 +55,11 @@ public class EditActivity extends BaseActivity {
 
     // Look at the bundle - and getExtra(
     if( getIntent().getExtras() != null ) {
-      recordID = getIntent().getExtras().getLong( "recordid" );
+      recordID = getIntent().getExtras().getInt( "recordid" );
     }
+
+    edtEditName.setText( events[recordID].getName() );
+    edtEditDescription.setText( events[recordID].getDescription() );
 //    // LiveData
 //    eventObserver = new Observer<Event>() {
 //      @Override

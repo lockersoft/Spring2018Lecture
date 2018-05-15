@@ -21,6 +21,7 @@ public class BaseActivity extends AppCompatActivity {
 
   //  public AppDatabase eventDatabase;
   RequestQueue requestQueue;
+  static Event[] events;
 
   @Override
   public void onCreate( @Nullable Bundle savedInstanceState ) {//@Nullable PersistableBundle persistentState) {
