@@ -176,8 +176,7 @@ public class MainActivity extends BaseActivity {
 //    );
 
 
-
-  public void saveEventOnClick( View v ) {
+  public void saveEventOnClick1( View v ) {
 
     String url = "https://api2018.azurewebsites.net/events";
     final String eventDescription = edtEventDescription.getText().toString();
@@ -211,6 +210,44 @@ public class MainActivity extends BaseActivity {
         new Response.Listener<JSONObject>() {
           @Override
           public void onResponse( JSONObject response ) {
+            Log.d( "EVENT", response.toString() );
+          }
+        },
+        new Response.ErrorListener() {
+          @Override
+          public void onErrorResponse( VolleyError error ) {
+            Log.d( "EVENT", error.toString() );
+          }
+        }
+    );
+
+    requestQueue.add( request );
+//    new Thread( new Runnable() {
+//
+//      @Override
+//      public void run() {
+//        Event event = new Event();
+//        event.setName( eventName );
+//        event.setDescription( eventDescription );
+//        event.setAttendees( "Dave, Karin" );
+//        event.setStartDate( startDate );
+//        event.setEndDate( new Date() );
+//        eventDatabase.eventDao().
+//            addEvent( event );
+//      }
+//    } ).start();
+
+  }
+
+  public void saveEventOnClick( View v ) {
+
+    String url = "https://api2018.azurewebsites.net/events/" + 12;
+
+    // POST that JSON object to the server using VOLLEY
+    StringRequest request = new StringRequest( Request.Method.DELETE, url,
+        new Response.Listener<String>() {
+          @Override
+          public void onResponse( String response ) {
             Log.d( "EVENT", response.toString() );
           }
         },
