@@ -17,6 +17,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.squareup.picasso.Picasso;
+
 import java.io.File;
 import java.io.IOError;
 import java.io.IOException;
@@ -41,7 +43,7 @@ public class EditActivity extends BaseActivity {
     edtEditName = findViewById( R.id.edtEditName );
     edtEditDescription = findViewById( R.id.edtEditDescription );
     edtAttendees = findViewById( R.id.edtAttendees );
-    imageView = findViewById( R.id.imageView );
+    imageView = findViewById( R.id.imageEvent );
 
     imageView.setImageResource( R.drawable.coming );
     imageView.setClickable( true );
@@ -60,6 +62,8 @@ public class EditActivity extends BaseActivity {
 
     edtEditName.setText( events[recordID].getName() );
     edtEditDescription.setText( events[recordID].getDescription() );
+    Picasso.with( this ).load( events[recordID].getImage() ).into( imageView );
+
 //    // LiveData
 //    eventObserver = new Observer<Event>() {
 //      @Override
