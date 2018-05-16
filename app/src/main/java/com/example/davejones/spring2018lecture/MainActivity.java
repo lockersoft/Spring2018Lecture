@@ -8,13 +8,16 @@ import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Cache;
 import com.android.volley.Network;
 import com.android.volley.Request;
@@ -28,6 +31,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
@@ -38,6 +42,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class MainActivity extends BaseActivity {
 
@@ -48,6 +53,7 @@ public class MainActivity extends BaseActivity {
   ArrayAdapter adapter;
   Date startDate;
   Gson gson;
+  ImageView imgPicasso;
 
 //  LiveData<List<Event>> items;
 
@@ -61,6 +67,9 @@ public class MainActivity extends BaseActivity {
     edtEventName = findViewById( R.id.edtEventName );
     edtStartDate = findViewById( R.id.edtStartDate );
     lstViewEvents = findViewById( R.id.lstViewEvents );
+
+    imgPicasso = findViewById( R.id.imgPicasso );
+    Picasso.with( this ).load( "http://i.imgur.com/DvpvklR.png" ).into( imgPicasso );
 
     GsonBuilder gsonBuilder = new GsonBuilder();
     gsonBuilder.setDateFormat( "yyyy-MM-dd'T'HH:mm:ssX" );    //"2018-05-07T16:13:40.000Z"
@@ -120,7 +129,18 @@ public class MainActivity extends BaseActivity {
             Log.d( "INTERNET", error.toString() );
             toastIt( "Internet Failure: " + error.toString() );
           }
-        } );
+        } ) {
+      @Override
+      public Map<String, String> getHeaders() throws AuthFailureError {
+        Map<String, String> headers = new HashMap<String, String>();
+        String credentials = username + ":" + password;
+        Log.d( "AUTH", "Login Info: " + credentials );
+        String auth = "Basic " + Base64.encodeToString( credentials.getBytes(), Base64.NO_WRAP );
+        headers.put( "Authorization", auth );
+        return headers;
+      }
+
+    };
 
     requestQueue.add( request );
   }
@@ -176,7 +196,7 @@ public class MainActivity extends BaseActivity {
 //    );
 
 
-  public void saveEventOnClick1( View v ) {
+  public void saveEventOnClick( View v ) {
 
     String url = "https://api2018.azurewebsites.net/events";
     final String eventDescription = edtEventDescription.getText().toString();
@@ -239,7 +259,7 @@ public class MainActivity extends BaseActivity {
 
   }
 
-  public void saveEventOnClick( View v ) {
+  public void saveEventOnClick1( View v ) {
 
     String url = "https://api2018.azurewebsites.net/events/" + 12;
 

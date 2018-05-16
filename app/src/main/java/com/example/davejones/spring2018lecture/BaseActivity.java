@@ -22,11 +22,15 @@ public class BaseActivity extends AppCompatActivity {
   //  public AppDatabase eventDatabase;
   RequestQueue requestQueue;
   static Event[] events;
+  String username, password;
 
   @Override
   public void onCreate( @Nullable Bundle savedInstanceState ) {//@Nullable PersistableBundle persistentState) {
     super.onCreate( savedInstanceState );
     setContentView( R.layout.activity_base );
+
+    username = "dave";
+    password = "jones";
 
 //    if( eventDatabase == null ) {
 //      eventDatabase = Room.databaseBuilder( getApplicationContext(),

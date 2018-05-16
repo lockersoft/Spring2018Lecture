@@ -22,6 +22,10 @@ public class Event {
   @Expose
   private Object attendees;
 
+  @SerializedName("image")
+  @Expose
+  private String image;
+
   @SerializedName("startDate")
   @Expose
   private Date startDate;
@@ -53,12 +57,13 @@ public class Event {
    * @param name
    * @param endDate
    */
-  public Event( Integer id, String name, String description, Object attendees, Date startDate, Date endDate, Date createdAt, Date updatedAt ) {
+  public Event( Integer id, String name, String description, Object attendees, String image, Date startDate, Date endDate, Date createdAt, Date updatedAt ) {
     super();
     this.id = id;
     this.name = name;
     this.description = description;
     this.attendees = attendees;
+    this.image = image;
     this.startDate = startDate;
     this.endDate = endDate;
     this.createdAt = createdAt;
@@ -99,6 +104,14 @@ public class Event {
 
   public void setAttendees( Object attendees ) {
     this.attendees = attendees;
+  }
+
+  public String getImage() {
+    return image;
+  }
+
+  public void setImage( String image ) {
+    this.image = image;
   }
 
   public Date getStartDate() {
