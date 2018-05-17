@@ -62,7 +62,7 @@ public class EditActivity extends BaseActivity {
 
     edtEditName.setText( events[recordID].getName() );
     edtEditDescription.setText( events[recordID].getDescription() );
-    Picasso.with( this ).load( events[recordID].getImage() ).into( imageView );
+    Picasso.with( getApplicationContext() ).load( events[recordID].getImage() ).into( imageView );
 
 //    // LiveData
 //    eventObserver = new Observer<Event>() {
