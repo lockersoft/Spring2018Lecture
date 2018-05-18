@@ -16,6 +16,8 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.BasicNetwork;
 import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public class BaseActivity extends AppCompatActivity {
 
@@ -23,6 +25,7 @@ public class BaseActivity extends AppCompatActivity {
   RequestQueue requestQueue;
   static Event[] events;
   String username, password;
+  Gson gson;
 
   @Override
   public void onCreate( @Nullable Bundle savedInstanceState ) {//@Nullable PersistableBundle persistentState) {
@@ -31,6 +34,10 @@ public class BaseActivity extends AppCompatActivity {
 
     username = "dave";
     password = "jones";
+
+    GsonBuilder gsonBuilder = new GsonBuilder();
+    gsonBuilder.setDateFormat( "yyyy-MM-dd'T'HH:mm:ssX" );    //"2018-05-07T16:13:40.000Z"
+    gson = gsonBuilder.create();
 
 //    if( eventDatabase == null ) {
 //      eventDatabase = Room.databaseBuilder( getApplicationContext(),

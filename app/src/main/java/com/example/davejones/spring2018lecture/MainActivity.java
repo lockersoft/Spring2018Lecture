@@ -52,7 +52,6 @@ public class MainActivity extends BaseActivity {
   private ListView lstViewEvents;
   ArrayAdapter adapter;
   Date startDate;
-  Gson gson;
   ImageView imgPicasso;
 
 //  LiveData<List<Event>> items;
@@ -70,10 +69,6 @@ public class MainActivity extends BaseActivity {
 
     imgPicasso = findViewById( R.id.imgPicasso );
     Picasso.with( this ).load( "http://i.imgur.com/DvpvklR.png" ).into( imgPicasso );
-
-    GsonBuilder gsonBuilder = new GsonBuilder();
-    gsonBuilder.setDateFormat( "yyyy-MM-dd'T'HH:mm:ssX" );    //"2018-05-07T16:13:40.000Z"
-    gson = gsonBuilder.create();
 
     internetOnClick( null );
 
