@@ -271,8 +271,19 @@ public class MainActivity extends BaseActivity {
           public void onErrorResponse( VolleyError error ) {
             Log.d( "EVENT", error.toString() );
           }
+
         }
-    );
+    ) {
+      @Override
+      public Map<String, String> getHeaders() throws AuthFailureError {
+        Map<String, String> headers = new HashMap<String, String>();
+        String credentials = username + ":" + password;
+        Log.d( "AUTH", "Login Info: " + credentials );
+        String auth = "Basic " + Base64.encodeToString( credentials.getBytes(), Base64.NO_WRAP );
+        headers.put( "Authorization", auth );
+        return headers;
+      }
+    };
 
     requestQueue.add( request );
 //    new Thread( new Runnable() {
