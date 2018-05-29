@@ -5,6 +5,7 @@ import android.arch.lifecycle.Observer;
 
 import android.arch.persistence.room.Room;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -127,12 +128,7 @@ public class MainActivity extends BaseActivity {
         } ) {
       @Override
       public Map<String, String> getHeaders() throws AuthFailureError {
-        Map<String, String> headers = new HashMap<String, String>();
-        String credentials = username + ":" + password;
-        Log.d( "AUTH", "Login Info: " + credentials );
-        String auth = "Basic " + Base64.encodeToString( credentials.getBytes(), Base64.NO_WRAP );
-        headers.put( "Authorization", auth );
-        return headers;
+        return getCredentials();
       }
 
     };
@@ -276,12 +272,7 @@ public class MainActivity extends BaseActivity {
     ) {
       @Override
       public Map<String, String> getHeaders() throws AuthFailureError {
-        Map<String, String> headers = new HashMap<String, String>();
-        String credentials = username + ":" + password;
-        Log.d( "AUTH", "Login Info: " + credentials );
-        String auth = "Basic " + Base64.encodeToString( credentials.getBytes(), Base64.NO_WRAP );
-        headers.put( "Authorization", auth );
-        return headers;
+        return getCredentials();
       }
     };
 
@@ -302,4 +293,5 @@ public class MainActivity extends BaseActivity {
 //    } ).start();
 
   }
+
 }

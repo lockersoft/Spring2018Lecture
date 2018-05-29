@@ -4,8 +4,11 @@ import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -18,6 +21,9 @@ import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class BaseActivity extends AppCompatActivity {
 
@@ -87,6 +93,17 @@ public class BaseActivity extends AppCompatActivity {
   public void toastIt( String msg ) {
     Toast.makeText( getApplicationContext(),
         msg, Toast.LENGTH_SHORT ).show();
+  }
+
+
+  @NonNull
+  public Map<String, String> getCredentials() {
+    Map<String, String> headers = new HashMap<String, String>();
+    String credentials = username + ":" + password;
+    Log.d( "AUTH", "Login Info: " + credentials );
+    String auth = "Basic " + Base64.encodeToString( credentials.getBytes(), Base64.NO_WRAP );
+    headers.put( "Authorization", auth );
+    return headers;
   }
 
 }
